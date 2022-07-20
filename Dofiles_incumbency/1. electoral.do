@@ -706,7 +706,9 @@ replace reform=1 if year==2021 & edon==`i'
 replace reform=1 if year==2022 & edon==`i'
 }
 
-replace reform=0 if reform==.
+replace reform=0 if reform==. & year<=2015 & estado!=20
+*In Oaxaca, only a third (around 149 to 152) municipalities have elections. The rest are governed by usos y costumbres. So variable reform only applies to these ones. We live them as missing. 
+
 
 *2) Alignment with federal executive
 replace win=subinstr(win,"-"," ",.)

@@ -32,11 +32,19 @@ cd "/Users/rafaeljafetchduran/Dropbox/Dissertation/GovernmentStrategies/incumben
 *Run do files
 *do "reelection_July19_2020_vargeneration_electoral_2.do" /*I don't need this one*/
 do "1. electoral.do"
+do "1. transfers.do"
 do "1. incumbent_characteristics.do"
-do "1. envipe.do"
-do "1. dtos.do"
+do "2. database.do"
+
+
+
+
+
+*** OLD / TRYING TO GET RID OF THE ONES NOT NEEDED
+do "1. envipe.do" // FOR REELECTION BACKFIRE 
+do "1. dtos.do" // FOR REELECTION BACKFIRE
 *do "1. mando_unico.do" // use other file; contains new variables and corrected estimates. 
-do "1. mando_unico_newvarnames.do"
+do "1. mando_unico_newvarnames.do" // FOR REELECTION BACKFIRE
 do "2. database.do"
 do "2. database_vargeneration.do"
 do "3. descriptive_statistics&balance"

@@ -9,11 +9,13 @@ set more off
 set varabbrev off 
 
 *Working Directory
-cd "/Users/rafach/Dropbox/Dissertation/GovernmentStrategies/reelection_backfire/Dofiles"
-*Clean datasets
+cd "/Users/rafaeljafetchduran/Dropbox/Dissertation/GovernmentStrategies/incumbency_advantage/Dofiles_incumbency"
+/*Source:
+https://www.inegi.org.mx/programas/finanzas/#Datos_abiertos
+*/
 *========================================================================
 *Participaciones federales
-foreach i in 2010 2011 2012 2013 2014 2015 2016 2017 2018{
+foreach i in 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021{
 insheet using "../../Data/ConstructionDatabase/Transferencias/efipem_municipal_csv/conjunto_de_datos/efipem_municipal_anual_tr_cifra_`i'.csv", clear
 rename anio year
 tostring id_entidad, replace
@@ -29,7 +31,17 @@ keep inegi year participaciones
 save "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_`i'.dta", replace
 }
 *merge
-use "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2010.dta", clear
+use "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2000.dta", clear
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2001.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2002.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2003.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2004.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2005.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2006.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2007.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2008.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2009.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2010.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2011.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2012.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2013.dta"
@@ -38,23 +50,26 @@ append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_pred
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2016.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2017.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2018.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2019.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2020.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2021.dta"
 order inegi year 
 sort inegi year
 *deflactar
 preserve
-insheet using "../../Data/ConstructionDatabase/Transferencias/deflator_WB/deflator_mexico.csv", clear
+insheet using "../../Data/ConstructionDatabase/Transferencias/deflator_WB/deflator_mexico_updated_2021.csv", clear
 save "../../Data/ConstructionDatabase/Transferencias/Stata/deflator_mexico.dta", replace
 restore
 merge m:m year using "../../Data/ConstructionDatabase/Transferencias/Stata/deflator_mexico.dta"
 drop _merge
-gen participaciones2=(participaciones/(100+deflator))*100
+gen participaciones2=(participaciones/deflator)*100
 order inegi year 
 sort inegi year
-save "../../Data/ConstructionDatabase/Transferencias/Stata/participaciones_2010_2018.dta", replace
+save "../../Data/ConstructionDatabase/Transferencias/Stata/participaciones_2000_2021.dta", replace
 
 *========================================================================
 *Fondos participables
-foreach i in 2010 2011 2012 2013 2014 2015 2016 2017 2018{
+foreach i in 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021{
 insheet using "../../Data/ConstructionDatabase/Transferencias/efipem_municipal_csv/conjunto_de_datos/efipem_municipal_anual_tr_cifra_`i'.csv", clear
 rename anio year
 tostring id_entidad, replace
@@ -71,7 +86,17 @@ keep inegi year participables
 save "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_`i'.dta", replace
 }
 *merge
-use "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2010.dta", clear
+use "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2000.dta", clear
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2001.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2002.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2003.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2004.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2005.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2006.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2007.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2008.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2009.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2010.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2011.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2012.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2013.dta"
@@ -80,23 +105,26 @@ append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_pred
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2016.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2017.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2018.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2019.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2020.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2021.dta"
 order inegi year 
 sort inegi year
 *deflactar
 preserve
-insheet using "../../Data/ConstructionDatabase/Transferencias/deflator_WB/deflator_mexico.csv", clear
+insheet using "../../Data/ConstructionDatabase/Transferencias/deflator_WB/deflator_mexico_updated_2021.csv", clear
 save "../../Data/ConstructionDatabase/Transferencias/Stata/deflator_mexico.dta", replace
 restore
 merge m:m year using "../../Data/ConstructionDatabase/Transferencias/Stata/deflator_mexico.dta"
 drop _merge
-gen participables2=(participables/(100+deflator))*100
+gen participables2=(participables/deflator)*100
 order inegi year 
 sort inegi year
-save "../../Data/ConstructionDatabase/Transferencias/Stata/participables_2010_2018.dta", replace
+save "../../Data/ConstructionDatabase/Transferencias/Stata/participables_2000_2021.dta", replace
 
 *========================================================================
 *Fondo General de Participaciones
-foreach i in 2010 2011 2012 2013 2014 2015 2016 2017 2018{
+foreach i in 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021{
 insheet using "../../Data/ConstructionDatabase/Transferencias/efipem_municipal_csv/conjunto_de_datos/efipem_municipal_anual_tr_cifra_`i'.csv", clear
 rename anio year
 tostring id_entidad, replace
@@ -113,7 +141,17 @@ keep inegi year participaciones
 save "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_`i'.dta", replace
 }
 *merge
-use "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2010.dta", clear
+use "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2000.dta", clear
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2001.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2002.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2003.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2004.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2005.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2006.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2007.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2008.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2009.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2010.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2011.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2012.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2013.dta"
@@ -122,23 +160,26 @@ append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_pred
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2016.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2017.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2018.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2019.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2020.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2021.dta"
 order inegi year 
 sort inegi year
 *deflactar
 preserve
-insheet using "../../Data/ConstructionDatabase/Transferencias/deflator_WB/deflator_mexico.csv", clear
+insheet using "../../Data/ConstructionDatabase/Transferencias/deflator_WB/deflator_mexico_updated_2021.csv", clear
 save "../../Data/ConstructionDatabase/Transferencias/Stata/deflator_mexico.dta", replace
 restore
 merge m:m year using "../../Data/ConstructionDatabase/Transferencias/Stata/deflator_mexico.dta"
 drop _merge
-gen participaciones2=(participaciones/(100+deflator))*100
+gen participaciones2=(participaciones/deflator)*100
 order inegi year 
 sort inegi year
-save "../../Data/ConstructionDatabase/Transferencias/Stata/participaciones_2010_2018.dta", replace
+save "../../Data/ConstructionDatabase/Transferencias/Stata/participaciones_2000_2021.dta", replace
 
 *========================================================================
 *Fondo de Fomento Municipal
-foreach i in 2010 2011 2012 2013 2014 2015 2016 2017 2018{
+foreach i in 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021{
 insheet using "../../Data/ConstructionDatabase/Transferencias/efipem_municipal_csv/conjunto_de_datos/efipem_municipal_anual_tr_cifra_`i'.csv", clear
 rename anio year
 tostring id_entidad, replace
@@ -154,7 +195,17 @@ keep inegi year fomento
 save "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_`i'.dta", replace
 }
 *merge
-use "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2010.dta", clear
+use "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2000.dta", clear
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2001.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2002.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2003.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2004.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2005.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2006.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2007.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2008.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2009.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2010.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2011.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2012.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2013.dta"
@@ -163,23 +214,26 @@ append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_pred
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2016.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2017.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2018.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2019.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2020.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2021.dta"
 order inegi year 
 sort inegi year
 *deflactar
 preserve
-insheet using "../../Data/ConstructionDatabase/Transferencias/deflator_WB/deflator_mexico.csv", clear
+insheet using "../../Data/ConstructionDatabase/Transferencias/deflator_WB/deflator_mexico_updated_2021.csv", clear
 save "../../Data/ConstructionDatabase/Transferencias/Stata/deflator_mexico.dta", replace
 restore
 merge m:m year using "../../Data/ConstructionDatabase/Transferencias/Stata/deflator_mexico.dta"
 drop _merge
-gen fomento2=(fomento/(100+deflator))*100
+gen fomento2=(fomento/deflator)*100
 order inegi year 
 sort inegi year
-save "../../Data/ConstructionDatabase/Transferencias/Stata/fomento_2010_2018.dta", replace
+save "../../Data/ConstructionDatabase/Transferencias/Stata/fomento_2000_2021.dta", replace
 
 *========================================================================
 *Aportaciones federales y estatales
-foreach i in 2010 2011 2012 2013 2014 2015 2016 2017 2018{
+foreach i in 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021{
 insheet using "../../Data/ConstructionDatabase/Transferencias/efipem_municipal_csv/conjunto_de_datos/efipem_municipal_anual_tr_cifra_`i'.csv", clear
 rename anio year
 tostring id_entidad, replace
@@ -195,7 +249,17 @@ keep inegi year aportaciones
 save "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_`i'.dta", replace
 }
 *merge
-use "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2010.dta", clear
+use "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2000.dta", clear
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2001.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2002.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2003.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2004.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2005.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2006.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2007.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2008.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2009.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2010.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2011.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2012.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2013.dta"
@@ -204,23 +268,26 @@ append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_pred
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2016.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2017.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2018.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2019.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2020.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2021.dta"
 order inegi year 
 sort inegi year
 *deflactar
 preserve
-insheet using "../../Data/ConstructionDatabase/Transferencias/deflator_WB/deflator_mexico.csv", clear
+insheet using "../../Data/ConstructionDatabase/Transferencias/deflator_WB/deflator_mexico_updated_2021.csv", clear
 save "../../Data/ConstructionDatabase/Transferencias/Stata/deflator_mexico.dta", replace
 restore
 merge m:m year using "../../Data/ConstructionDatabase/Transferencias/Stata/deflator_mexico.dta"
 drop _merge
-gen aportaciones2=(aportaciones/(100+deflator))*100
+gen aportaciones2=(aportaciones/deflator)*100
 order inegi year 
 sort inegi year
-save "../../Data/ConstructionDatabase/Transferencias/Stata/aportaciones_2010_2018.dta", replace
+save "../../Data/ConstructionDatabase/Transferencias/Stata/aportaciones_2000_2021.dta", replace
 
 *========================================================================
 *FA para la Infraestructura Social Municipal
-foreach i in 2010 2011 2012 2013 2014 2015 2016 2017 2018{
+foreach i in 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021{
 insheet using "../../Data/ConstructionDatabase/Transferencias/efipem_municipal_csv/conjunto_de_datos/efipem_municipal_anual_tr_cifra_`i'.csv", clear
 rename anio year
 tostring id_entidad, replace
@@ -236,7 +303,17 @@ keep inegi year fa_infra
 save "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_`i'.dta", replace
 }
 *merge
-use "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2010.dta", clear
+use "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2000.dta", clear
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2001.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2002.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2003.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2004.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2005.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2006.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2007.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2008.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2009.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2010.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2011.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2012.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2013.dta"
@@ -245,23 +322,26 @@ append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_pred
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2016.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2017.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2018.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2019.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2020.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2021.dta"
 order inegi year 
 sort inegi year
 *deflactar
 preserve
-insheet using "../../Data/ConstructionDatabase/Transferencias/deflator_WB/deflator_mexico.csv", clear
+insheet using "../../Data/ConstructionDatabase/Transferencias/deflator_WB/deflator_mexico_updated_2021.csv", clear
 save "../../Data/ConstructionDatabase/Transferencias/Stata/deflator_mexico.dta", replace
 restore
 merge m:m year using "../../Data/ConstructionDatabase/Transferencias/Stata/deflator_mexico.dta"
 drop _merge
-gen fa_infra2=(fa_infra/(100+deflator))*100
+gen fa_infra2=(fa_infra/deflator)*100
 order inegi year 
 sort inegi year
-save "../../Data/ConstructionDatabase/Transferencias/Stata/fa_infra_2010_2018.dta", replace
+save "../../Data/ConstructionDatabase/Transferencias/Stata/fa_infra_2000_2021.dta", replace
 
 *========================================================================
 *FA para el Fortalecimiento de los Municipios
-foreach i in 2010 2011 2012 2013 2014 2015 2016 2017 2018{
+foreach i in 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021{
 insheet using "../../Data/ConstructionDatabase/Transferencias/efipem_municipal_csv/conjunto_de_datos/efipem_municipal_anual_tr_cifra_`i'.csv", clear
 rename anio year
 tostring id_entidad, replace
@@ -277,7 +357,17 @@ keep inegi year fa_fortalecer
 save "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_`i'.dta", replace
 }
 *merge
-use "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2010.dta", clear
+use "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2000.dta", clear
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2001.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2002.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2003.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2004.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2005.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2006.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2007.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2008.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2009.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2010.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2011.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2012.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2013.dta"
@@ -286,16 +376,19 @@ append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_pred
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2016.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2017.dta"
 append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2018.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2019.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2020.dta"
+append using "../../Data/ConstructionDatabase/Transferencias/Stata/impuesto_predial_2021.dta"
 order inegi year 
 sort inegi year
 *deflactar
 preserve
-insheet using "../../Data/ConstructionDatabase/Transferencias/deflator_WB/deflator_mexico.csv", clear
+insheet using "../../Data/ConstructionDatabase/Transferencias/deflator_WB/deflator_mexico_updated_2021.csv", clear
 save "../../Data/ConstructionDatabase/Transferencias/Stata/deflator_mexico.dta", replace
 restore
 merge m:m year using "../../Data/ConstructionDatabase/Transferencias/Stata/deflator_mexico.dta"
 drop _merge
-gen fa_fortalecer2=(fa_fortalecer/(100+deflator))*100
+gen fa_fortalecer2=(fa_fortalecer/deflator)*100
 order inegi year 
 sort inegi year
-save "../../Data/ConstructionDatabase/Transferencias/Stata/fa_fortalecer_2010_2018.dta", replace
+save "../../Data/ConstructionDatabase/Transferencias/Stata/fa_fortalecer_2000_2021.dta", replace

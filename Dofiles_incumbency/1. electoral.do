@@ -706,7 +706,11 @@ replace reform=1 if year==2021 & edon==`i'
 replace reform=1 if year==2022 & edon==`i'
 }
 
-replace reform=0 if reform==. & year<=2015 & edon!=20
+replace reform=0 if reform==. & year<=2015
+replace reform=0 if reform==. & year==2016 & edon==29
+replace reform=0 if reform==. & year==2017 & edon==18
+*we still have some missings from Hidalgo and Veracruz that are never treated
+replace reform=0 if reform==. & edon==13 | edon==30
 *In Oaxaca, only a third (around 149 to 152) municipalities have elections. The rest are governed by usos y costumbres. So variable reform only applies to these ones. We live them as missing. 
 
 

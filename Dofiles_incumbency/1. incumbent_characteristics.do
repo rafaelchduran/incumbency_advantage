@@ -1,7 +1,6 @@
-*****************************************************
-*Reelection Backfire
-*Rafael Ch (2020)
-*Incumbents characteristics   
+*Incumbent's Professional titles
+*Paper: Incumbency advantage
+*Author: Rafael Ch (rafael.ch@nyu.edu)  
 *****************************************************
 
 clear all
@@ -87,7 +86,7 @@ rename presidentemunicipal1 title
 drop presidentemunicipal2-presidentemunicipal9
 rename partido partido_from_snim
 rename ano_inicial year
-keep if year>2009
+keep if year>2009 // THINK ABOUT THIS, I COULD INCLUDE MORE YEARS
 
 *by cases modify the year to state the election year rather than the year in office:
 replace year=year-1 if estado=="Aguascalientes" & year<2021
